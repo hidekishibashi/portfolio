@@ -11,7 +11,11 @@ app.use(bodyParser.json());
 const cors = require('cors')({origin: true});
 app.use(cors);
 
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: 'https://seattle-academy-demo.firebaseio.com'
+});
+
 app.get('/', (req, res) => {
   const query = admin.database().ref("sections_1");
   query.once("value").then(snapshot => {
