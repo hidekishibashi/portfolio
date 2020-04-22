@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     skillCategories: [],
+    loaded: false,
   },
 
   getters: {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   mutations: {
     setSkillCategories(state, payload) {
       state.skillCategories = payload.skillCategories;
+      state.loaded = true;
     },
   },
 
