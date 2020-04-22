@@ -1,29 +1,35 @@
 <template lang='pug'>
   #app
-    img(alt='Vue logo', src='./assets/logo.png')
-    HelloWorld(msg='This is develop branch')
+    button(@click="setChartCategory('front-end')")
+      | front
+    button(@click="setChartCategory('back-end')")
+      | back
+    button(@click="setChartCategory('devops')")
+      | devops
+    Chart(
+      v-if="loaded"
+      :category="this.chartCategory"
+    )
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import {mapActions, mapGetters} from 'vuex';
+import Chart from './components/Chart.vue';
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Chart,
   },
 
   data: function() {
     return {
-      category: 'front-end',
+      chartCategory: 'front-end',
     };
   },
 
   computed: {
-    ...mapGetters({
-      get: 'getSkills',
-    }),
+    ...mapState(['loaded']),
   },
 
   created() {
@@ -33,8 +39,8 @@ export default {
   methods: {
     ...mapActions(['updateSkillCategories']),
 
-    getSkill() {
-      this.get(this.category);
+    setChartCategory(category) {
+      this.chartCategory = category;
     },
   },
 };
