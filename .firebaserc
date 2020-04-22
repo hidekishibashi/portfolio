@@ -1,5 +1,21 @@
 {
   "projects": {
     "default": "seattle-academy-demo"
+  },
+  "targets": {
+    "seattle-academy-demo": {
+      "hosting": {
+        "portfolio": [
+          "seattle-academy-demo"
+        ]
+      }
+    },
+    "portfolio-43a14": {
+      "hosting": {
+        "portfolio": [
+          "portfolio-43a14"
+        ]
+      }
+    }
   }
 }
