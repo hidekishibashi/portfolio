@@ -1,33 +1,35 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-
-// express and parser
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const app = express();
 app.use(bodyParser.json());
 
-// cors
-const cors = require('cors')({origin: true});
-app.use(cors);
-
 admin.initializeApp();
 app.get('/', (req, res) => {
-  const query = admin.database().ref("sections_1");
+
+  // Cross-Origin Resource Sharing（CORS）に対応させる
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST');
+  // realtime databaseからスキルデータを取得する
+  let skills = []
+  const query = admin.database().ref("skill-categories").orderByKey();
   query.once("value").then(snapshot => {
-    return res.send(snapshot);
-  }).catch(error => {
-      // eslint-disable-next-line no-alert
-      alert(error);
+    // 取得したデータを１件ずつ配列に設定する
+    snapshot.forEach(childSnapshot => {
+      // 取得したデータを１件ずつ配列に設定する
+      let skill = childSnapshot.val();
+      skills.push(skill);
+    });
+    // 取得結果を返す
+    return res.send(skills);
+  })
+    .catch(error => {
+      // 取得時にエラーがでた場合にエラー文字列を返す
       res.status(404).send('No data available.');
     });
 });
 
-exports.app = functions.https.onRequest(app);
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+// regionを指定してファンクションを定義(CORS対策)
+exports.skillCategories = functions.region('us-central1').https.onRequest(app);

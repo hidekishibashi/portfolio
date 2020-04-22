@@ -6,11 +6,36 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
+  },
+
+  data: function() {
+    return {
+      category: 'front-end',
+    };
+  },
+
+  computed: {
+    ...mapGetters({
+      get: 'getSkills',
+    }),
+  },
+
+  created() {
+    this.updateSkillCategories();
+  },
+
+  methods: {
+    ...mapActions(['updateSkillCategories']),
+
+    getSkill() {
+      this.get(this.category);
+    },
   },
 };
 </script>
