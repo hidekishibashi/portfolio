@@ -57,7 +57,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "lint-staged": "^8.0.0",
     "pre-commit": "^1.2.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "stylelint": "^13.3.0",
